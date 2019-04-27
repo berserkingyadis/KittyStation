@@ -3,12 +3,12 @@
 
 CPU::CPU()
 {
-	programCounter = 0xbfc00000;
+	m_programCounter = 0xbfc00000;
 }
 
 void CPU::processNextInstruction()
 {
-	uint32_t instruction = loadInstruction32(programCounter);
+	uint32_t instruction = loadInstruction32(m_programCounter);
 	instruction += 4;
 	decodeAndExecute(instruction);
 }

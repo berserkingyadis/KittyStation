@@ -14,7 +14,7 @@ BIOS::BIOS(const char* filename)
 			std::cout << "Meow. BIOS file size is correct." << std::endl;
 			
 			file.seekg(0, std::ios::beg);
-			file.read((char*)&data[0x0], filesize);
+			file.read((char*)&m_data[0x0], filesize);
 			uint32_t writtensize = file.gcount();
 			if (filesize == writtensize) {
 				std::cout << "BIOS load success." << std::endl;
@@ -34,4 +34,15 @@ BIOS::BIOS(const char* filename)
 		file.close();
 	}
 	file.close();
+}
+
+uint32_t BIOS::load32(uint32_t offset)
+{
+	uint32_t b0 = m_data[offset + 0];
+	uint32_t b1 = m_data[offset + 1];
+	uint32_t b2 = m_data[offset + 2];
+	uint32_t b3 = m_data[offset + 3];
+
+	
+	return b0 | (b1 << 8) | (b2 << 16) | (b3 << 24);
 }
