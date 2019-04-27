@@ -1,7 +1,10 @@
 # Folders
 /build/
-# Dont wanna put romz on teh internetz
+
+# Dont wanna put romz or bioz on teh internetz
 /roms/
+/bios/
+
 #Rest
 CMakeLists.txt.user
 tags

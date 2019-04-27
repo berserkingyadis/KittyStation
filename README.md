@@ -16,8 +16,10 @@ make
 ## Running the emulator
 
 ```bash
-./KittyStation
+./KittyStation <Path to PS1-BIOS>
 ```
+
+The supported BIOS is SCPH1001.BIN (md5: `924e392ed05558ffdb115408c263dccf`)
 
 ## Compiling under Linux
 

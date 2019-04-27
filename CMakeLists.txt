@@ -3,7 +3,7 @@ project(KittyStation CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp CPU.cpp CPU.h)
+set(SOURCE_FILES main.cpp CPU.cpp CPU.h BIOS.cpp BIOS.h)
 add_executable(KittyStation ${SOURCE_FILES})
 
 
