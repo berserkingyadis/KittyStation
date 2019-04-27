@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "BIOS.h"
+#include "Interconnect.h"
+#include "CPU.h"
 
 #define VERSION "0.0.1"
 
@@ -31,8 +33,12 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::cout << "Meow." << std::endl;
-	BIOS b(argv[1]);
 
+	BIOS* b = new BIOS(argv[1]);
+	Interconnect* i = new Interconnect(b);
+	CPU* c = new CPU(i);
+
+	c->start();
 	return 0;
 }
 

@@ -34,15 +34,18 @@ BIOS::BIOS(const char* filename)
 		file.close();
 	}
 	file.close();
+
+	i_mappingBegin = 0xbfc00000;
+	i_mappingLength = BIOS_SIZE;
 }
 
-uint32_t BIOS::load32(uint32_t offset)
+uint32_t BIOS::load32(uint32_t adr)
 {
+	uint32_t offset = adr - i_mappingBegin;
 	uint32_t b0 = m_data[offset + 0];
 	uint32_t b1 = m_data[offset + 1];
 	uint32_t b2 = m_data[offset + 2];
 	uint32_t b3 = m_data[offset + 3];
 
-	
 	return b0 | (b1 << 8) | (b2 << 16) | (b3 << 24);
 }
