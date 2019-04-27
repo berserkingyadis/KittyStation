@@ -8,7 +8,7 @@
 CPU::CPU(Interconnect* interconnect)
 {
 	m_interconnect = interconnect;
-	m_programCounter = 0xbfc00000; //beginning of BIOS
+	initMachineState();
 }
 
 void CPU::start()
@@ -19,10 +19,20 @@ void CPU::start()
 	}
 }
 
+void CPU::initMachineState()
+{
+	for (int i = 0; i < CPU_REGISTERS_SIZE; i++) {
+		m_state.registers[i] = 0xdeadbeef;
+	}
+	m_state.registers[0] = 0;
+
+	m_state.program_counter = 0xbfc00000; //beginning of BIOS
+}
+
 void CPU::processNextInstruction()
 {
-	uint32_t instruction = load32(m_programCounter);
-	m_programCounter += 4;
+	uint32_t instruction = load32(m_state.program_counter);
+	m_state.program_counter += 4;
 	decodeAndExecute(instruction);
 	
 }
