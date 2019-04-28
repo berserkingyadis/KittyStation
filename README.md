@@ -3,6 +3,11 @@ Playstation Emulator in C++
 
 This is a PSX Emulator very (very) early in development. I am following several guides to get the gist how to do this, so dont expect any playability or even graphics in a long time.
 
+## Guides
+- [Simias psx guide](https://github.com/simias/psx-guide) (in tex, but theres a compiled pdf in [one of the issues](https://github.com/simias/psx-guide/issues/4)).
+- [nocash psx guide and site](https://problemkaputt.de/psx-spx.htm)
+- Several helpful people in the [emudev discord](https://www.reddit.com/r/EmuDev/comments/9mop2q/join_the_official_remudev_chat_on_discord/) 
+
 ## Dependencies
 
 You will need SDL2 and cmake to compile on Windows or Linux.
