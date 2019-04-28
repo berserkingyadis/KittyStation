@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <bitset>
 
 #include "Interconnect.h"
 
@@ -44,11 +45,21 @@ uint32_t CPU::load32(uint32_t address)
 
 void CPU::decodeAndExecute(uint32_t instruction)
 {
-	panicInstruction(instruction);
+	
+	switch (instruction >> 26) {
+	case 0b001111:
+		std::cout << "LUI instruction found!" << std::endl;
+		break;
+	default:
+		panicInstruction(instruction);
+		break;
+	}
 }
+
 
 void CPU::panicInstruction(uint32_t instruction)
 {
 	std::cerr << "CAT PANIC! Unknown Instruction: " << "0x" << std::setfill('0') << std::setw(8) << std::hex << instruction << std::endl;
+	std::cout << "instruction[31:26] = 0b" << std::bitset<6>(instruction >> 26) << std::endl;
 	exit(99);
 }
