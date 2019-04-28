@@ -28,7 +28,7 @@ The supported BIOS is SCPH1001.BIN (md5: `924e392ed05558ffdb115408c263dccf`)
 
 ## Compiling under Linux
 
-After installing SDL2 you can just follow the steps under #Dependencies, cmake will find the dependencies.
+After installing SDL2 you can just follow the steps under #Dependencies, cmake will find the dependencies. If cmake complains about not finding the target `SDL2::SDL2`, your sdl2 is a bit older than mine. I that case just use the way how I find sdl2 under Windows.
 
 ## Compiling under Windows
 
