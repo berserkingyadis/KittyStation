@@ -12,13 +12,13 @@ BIOS::BIOS(const char* filename)
 
 	if (file.is_open()) {
 		file.seekg(0, std::ios::end);
-		uint32_t filesize = file.tellg();
+		std::streamoff filesize = file.tellg();
 		if (filesize == BIOS_SIZE) {
 			std::cout << "Meow. BIOS file size is correct." << std::endl;
 			
 			file.seekg(0, std::ios::beg);
 			file.read((char*)&m_data[0x0], filesize);
-			uint32_t writtensize = file.gcount();
+			std::streamsize writtensize = file.gcount();
 			if (filesize == writtensize) {
 				std::cout << "BIOS load success." << std::endl;
 			}

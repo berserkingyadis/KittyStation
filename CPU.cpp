@@ -5,6 +5,7 @@
 #include <bitset>
 
 #include "Interconnect.h"
+#include "Macros.h"
 
 CPU::CPU(Interconnect* interconnect)
 {
@@ -48,8 +49,11 @@ void CPU::decodeAndExecute(uint32_t instruction)
 	m_instrDescr.value = instruction;
 
 	switch (m_instrDescr.I.OP) {
-	case 0b001111:
+	case 0x0F:
 		instruction_LUI();
+		break;
+	case 0x0D:
+		instruction_ORI();
 		break;
 	default:
 		panicInstruction(instruction);
@@ -62,13 +66,22 @@ void CPU::instruction_LUI() {
 	//std::cout << "LUI test: " << "0x" << std::setfill('0') << std::setw(8) << std::hex << m_state.registers[0x8] << std::endl;
 }
 
+void CPU::instruction_ORI() {
+	setRegister(m)
+}
+
+inline uint32_t CPU::getRegister(uint32_t index)
+{
+	return m_state.registers[index];
+}
+
 void CPU::setRegister(uint32_t index, uint32_t value) {
 	m_state.registers[index] = value;
 	m_state.registers[0] = 0; //making sure first register is zero
 }
 void CPU::panicInstruction(uint32_t instruction)
 {
-	std::cerr << "CAT PANIC! Unknown Instruction: " << "0x" << std::setfill('0') << std::setw(8) << std::hex << instruction << std::endl;
-	std::cout << "instruction[31:26] = 0b" << std::bitset<6>(instruction >> 26) << std::endl;
+	std::cerr << "CAT PANIC! Unknown Instruction: " << HEX(instruction, 8) << std::endl;
+	std::cout << "instruction[31:26] = " << BIN(instruction >> 26,6) << " // " << HEX(instruction >> 26, 2) << std::endl;
 	exit(99);
 }

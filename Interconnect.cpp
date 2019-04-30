@@ -1,5 +1,9 @@
 #include "Interconnect.h"
 
+#include "Macros.h"
+
+#include <iostream>
+#include <iomanip>
 
 Interconnect::Interconnect(BIOS* bios)
 {
@@ -15,4 +19,9 @@ uint32_t Interconnect::load32(uint32_t adr)
 			return device->load32(adr);
 		}
 	}
+	std::cerr << "fatal error: no device is memorymapped at address " << HEX(adr, 8) << std::endl;
+	exit(99);
+
+	//never reached
+	return -1;
 }
