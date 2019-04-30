@@ -45,10 +45,11 @@ uint32_t CPU::load32(uint32_t address)
 
 void CPU::decodeAndExecute(uint32_t instruction)
 {
-	
-	switch (instruction >> 26) {
+	m_instrDescr.value = instruction;
+
+	switch (m_instrDescr.I.OP) {
 	case 0b001111:
-		std::cout << "LUI instruction found!" << std::endl;
+		instruction_LUI();
 		break;
 	default:
 		panicInstruction(instruction);
@@ -56,7 +57,15 @@ void CPU::decodeAndExecute(uint32_t instruction)
 	}
 }
 
+void CPU::instruction_LUI() {
+	setRegister(m_instrDescr.I.RT, m_instrDescr.I.IMM << 16);
+	//std::cout << "LUI test: " << "0x" << std::setfill('0') << std::setw(8) << std::hex << m_state.registers[0x8] << std::endl;
+}
 
+void CPU::setRegister(uint32_t index, uint32_t value) {
+	m_state.registers[index] = value;
+	m_state.registers[0] = 0; //making sure first register is zero
+}
 void CPU::panicInstruction(uint32_t instruction)
 {
 	std::cerr << "CAT PANIC! Unknown Instruction: " << "0x" << std::setfill('0') << std::setw(8) << std::hex << instruction << std::endl;

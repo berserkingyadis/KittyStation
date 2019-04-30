@@ -18,7 +18,8 @@ void print_version();
 int main(int argc, char *argv[]) {
 
 	if (argc != 2) {
-		std::cerr << "Meow. 2 args expected." << std::endl;
+		std::cerr << "Error. 2 args expected." << std::endl;
+		exit(99);
 	}
 	// parse program arguments and if applicable print info and exit
 	for (int i = 1; i < argc; ++i) {

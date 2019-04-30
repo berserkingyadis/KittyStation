@@ -20,6 +20,30 @@ struct cpuMachineState
 
 };
 
+// this union->struct->bitfield magic was adapted with permission from https://github.com/LukeUsher
+union InstructionDescr {
+	uint32_t value;
+	struct {
+		uint32_t Funct : 6; // 0-5
+		uint32_t ShAmt : 5; // 6-10
+		uint32_t RD : 5;    // 11-15
+		uint32_t RT : 5;    // 16-20
+		uint32_t RS : 5;    // 21-25
+		uint32_t OP : 6;    // 26-31
+		
+	} R;
+	struct {
+		uint32_t IMM : 16;   // 0-15
+		uint32_t RT : 5;    // 16-20
+		uint32_t RS : 5;	// 21-25
+		uint32_t OP : 6;    // 26-31
+	} I;
+	struct {
+		uint32_t TGT : 26;  // 0-25
+		uint32_t OP : 6;    // 26-31
+	} J;
+};
+
 class CPU
 {
 public:
@@ -30,16 +54,25 @@ public:
 private:
 	void initMachineState();
 	void processNextInstruction();
-	uint32_t load32(uint32_t address);
 	void decodeAndExecute(uint32_t instruction);
 
 	void panicInstruction(uint32_t instruction);
 
 	cpuMachineState m_state;
+
 	bool m_running;
+	InstructionDescr m_instrDescr;
 
 	Interconnect* m_interconnect;
 
-	
+	// register store/load
+	void setRegister(uint32_t index, uint32_t value);
+	// memory store/load
+	uint32_t load32(uint32_t address);
+
+
+	// CPU instructions
+
+	void instruction_LUI();
 };
 
