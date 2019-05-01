@@ -68,13 +68,15 @@ private:
 	// register store/load
 	void setRegister(uint32_t index, uint32_t value);
 	inline uint32_t getRegister(uint32_t index);
+	
 	// memory store/load
 	uint32_t load32(uint32_t address);
-
+	void store32(uint32_t address, uint32_t value);
 
 	// CPU instructions
 
 	void instruction_LUI();
 	void instruction_ORI();
+	void instruction_SW();
 };
 

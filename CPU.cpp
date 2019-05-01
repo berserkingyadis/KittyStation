@@ -44,6 +44,11 @@ uint32_t CPU::load32(uint32_t address)
 	return m_interconnect->load32(address);
 }
 
+void CPU::store32(uint32_t address, uint32_t value)
+{
+	m_interconnect->store32(address, value);
+}
+
 void CPU::decodeAndExecute(uint32_t instruction)
 {
 	m_instrDescr.value = instruction;
@@ -55,19 +60,13 @@ void CPU::decodeAndExecute(uint32_t instruction)
 	case 0x0D:
 		instruction_ORI();
 		break;
+	case 0x2B:
+		instruction_SW();
+		break;
 	default:
 		panicInstruction(instruction);
 		break;
 	}
-}
-
-void CPU::instruction_LUI() {
-	setRegister(m_instrDescr.I.RT, m_instrDescr.I.IMM << 16);
-	//std::cout << "LUI test: " << "0x" << std::setfill('0') << std::setw(8) << std::hex << m_state.registers[0x8] << std::endl;
-}
-
-void CPU::instruction_ORI() {
-	setRegister(m)
 }
 
 inline uint32_t CPU::getRegister(uint32_t index)
@@ -85,3 +84,23 @@ void CPU::panicInstruction(uint32_t instruction)
 	std::cout << "instruction[31:26] = " << BIN(instruction >> 26,6) << " // " << HEX(instruction >> 26, 2) << std::endl;
 	exit(99);
 }
+
+
+
+void CPU::instruction_LUI() {
+	setRegister(m_instrDescr.I.RT, m_instrDescr.I.IMM << 16);
+	//std::cout << "LUI test: " << "0x" << std::setfill('0') << std::setw(8) << std::hex << m_state.registers[0x8] << std::endl;
+}
+
+void CPU::instruction_ORI() {
+	setRegister(m_instrDescr.I.RT, getRegister(m_instrDescr.I.RS) | m_instrDescr.I.IMM);
+	//std::cout << HEX(getRegister(0x8), 8) << std::endl;
+}
+
+void CPU::instruction_SW()
+{
+	uint32_t addr = getRegister(m_instrDescr.I.RS) + m_instrDescr.I.IMM;
+	store32(addr, getRegister(m_instrDescr.I.RT));
+}
+
+
